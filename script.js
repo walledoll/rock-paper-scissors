@@ -1,106 +1,111 @@
 let humanScore = 0;
 let ComputerScore = 0;
 
+function playRound(choice) {
+  let humanChoice = choice;
+  let ComputerChoice = getComputerChoice();
+  console.log(humanChoice);
+  console.log(ComputerChoice);
+  let checkString = String(humanChoice) + String(ComputerChoice);
+  const ul = document.createElement("ul");
+  const li = document.createElement("li");
+  ul.id = "results";
+  switch (checkString) {
+    case "rockscissors": {
+      li.textContent = "Rock beats scissors, Human win";
+      humanScore++;
+      break;
+    }
+    case "scissorspaper": {
+      li.textContent = "Scissors beats paper, Human win";
+      humanScore++;
+      break;
+    }
+    case "paperrock": {
+      li.textContent = "Paper beats rock, Human win";
+      humanScore++;
+      break;
+    }
+    case "scissorsrock": {
+      li.textContent = "Rock beats scissors, Computer win";
+      ComputerScore++;
+      break;
+    }
+    case "paperscissors": {
+      li.textContent = "Scissors beats paper, Computer win";
+      ComputerScore++;
+      break;
+    }
+    case "rockpaper": {
+      li.textContent = "Paper beats rock, Computer win";
+      ComputerScore++;
+      break;
+    }
+    case "rockrock":
+    case "scissorsscissors":
+    case "paperpaper": {
+      li.textContent = "It's draw";
+      break;
+    }
+  }
+  if(document.querySelector("#cong")){
+    document.querySelector("#cong").remove();
+  }
+  if(document.querySelector("#results")){
+    document.querySelector("#results").remove();
+  }
+  
+  ul.appendChild(li);
+  document.body.append(document.createElement("p"));
+  document.body.appendChild(ul);
+ 
+  const score = document.querySelector("p");
+  score.textContent = `Current Score: Human(${humanScore}), Computer(${ComputerScore})`;
 
+  const congrats = document.createElement("h2");
+  congrats.id = "cong";
+  console.log(humanScore);
+  if (humanScore === 5) {
+    congrats.textContent = "Human win";
+    document.body.appendChild(congrats);
+    
+    humanScore = 0;
+    ComputerScore = 0;
+  }
+  else if(ComputerScore === 5){
+    congrats.textContent = "Computer wins";
+    document.body.appendChild(congrats);
 
-function playRound(){
-	let humanChoice = getHumanChoice();
-	let ComputerChoice = getComputerChoice();
-	console.log(humanChoice);
-	console.log(ComputerChoice);
-	let checkString = String(humanChoice)+ String(ComputerChoice);
-	switch(checkString){
-		case "rockscissors":{
-			alert("Rock beats scissors, Human win");
-			humanScore++;
-			break;
-		}
-		case "scissorspaper":{
-			alert("Scissors beats paper, Human win");
-			humanScore++;
-			break;
-		}
-		case "paperrock":{
-			alert("Paper beats rock, Human win");
-			humanScore++;
-			break;
-		}
-		case "scissorsrock":{
-			alert("Rock beats scissors, Computer win");
-			humanScore++;
-			break;
-		}
-		case "paperscissors":{
-			alert("Scissors beats paper, Computer win");
-			humanScore++;
-			break;
-		}
-		case "rockpaper":{
-			alert("Paper beats rock, Computer win");
-			humanScore++;
-			break;
-		}
-		case "rockrock":
-		case "scissorsscissors":
-		case "paperpaper":
-		{
-			alert("It's draw");
-			break;
-		}
-		case"undefinedrock":
-		case"undefinedscissors":
-		case"undefinedpaper":{
-			alert("Computer wins");
-			ComputerScore++;
-		}
-	}
-	
-}
+    humanScore = 0;
+    ComputerScore = 0;
 
-function getComputerChoice(){
-	let arr = ["rock", "paper", "scissors"];
-	return arr[Math.floor(Math.random()*3)];
-}
-
-function getHumanChoice(){
-	let choice = prompt("Enter your choice: (R)ock, (P)aper or (S)cissors").toLowerCase();
-	switch(choice){
-		case "rock":
-		case "r": 
-		{
-			return "rock";
-			break;
-		}
-		case "paper":
-		case "p":
-		{
-			return "paper";
-			break;
-		}
-		case "scissors":
-		case "s":
-		{
-			return "scissors";
-			break;
-		}
-		default:
-		{
-			alert("Wrong choice");
-			break;
-		}
-	}
+  }
+  
 }
 
-for(let i = 0; i < 5; ++i){
-	playRound();
+function getComputerChoice() {
+  let arr = ["rock", "paper", "scissors"];
+  return arr[Math.floor(Math.random() * 3)];
 }
 
-if(ComputerScore > humanScore){
-	alert("Computer win");
-}
-else if(ComputerScore < humanScore){
-	alert("You win!");
-}
-else{
-	alert("It's draw");
-}
+
+const rock = document.createElement("button");
+rock.textContent = "Rock";
+const paper = document.createElement("button");
+paper.textContent = "Paper";
+const scissors = document.createElement("button");
+scissors.textContent = "Scissors";
+rock.addEventListener("click", () => {
+  let humanChoice = "rock";
+  playRound(humanChoice);
+});
+paper.addEventListener("click", () => {
+  let humanChoice = "paper";
+  playRound(humanChoice);
+});
+scissors.addEventListener("click", () => {
+  let humanChoice = "scissors";
+  playRound(humanChoice);
+});
+document.body.append(rock, paper, scissors);
+
